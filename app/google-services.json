@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "200995740858",
+    "firebase_url": "https://drivesoberapp.firebaseio.com",
+    "project_id": "drivesoberapp",
+    "storage_bucket": "drivesoberapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200995740858:android:4236dacff9cb28ff463683",
+        "android_client_info": {
+          "package_name": "be.pxl.drivesoberapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200995740858-nd22j72qram93hoqs8h4fb2la9o790a8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "be.pxl.drivesoberapp",
+            "certificate_hash": "e13519285ec917ea1de3b4733249502d31a7e57d"
+          }
+        },
+        {
+          "client_id": "200995740858-v3ra9tg2c0qlcb39rsj4t5vv746v1cr2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5gT1Q8iVqsCF9tuTR5lphE3X6IOaO_54"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "200995740858-v3ra9tg2c0qlcb39rsj4t5vv746v1cr2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

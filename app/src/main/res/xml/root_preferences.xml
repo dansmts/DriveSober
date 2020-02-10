@@ -1,0 +1,23 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/pref_user_header">
+
+        <EditTextPreference
+            app:key="@string/pref_weight_key"
+            app:title="@string/pref_weight_title"
+            app:defaultValue="@string/pref_weight_default"
+            app:useSimpleSummaryProvider="true"
+            android:inputType="numberDecimal" />
+
+        <ListPreference
+            app:defaultValue="@string/pref_gender_default_value"
+            app:entries="@array/pref_gender_entries"
+            app:entryValues="@array/pref_gender_values"
+            app:key="@string/pref_gender_key"
+            app:title="@string/pref_gender_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
