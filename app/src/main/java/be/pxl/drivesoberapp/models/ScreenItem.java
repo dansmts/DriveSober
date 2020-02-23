@@ -1,4 +1,4 @@
-package be.pxl.drivesoberapp.firstlaunch;
+package be.pxl.drivesoberapp.models;
 
 
 public class ScreenItem {

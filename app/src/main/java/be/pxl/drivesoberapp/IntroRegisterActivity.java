@@ -1,5 +1,6 @@
-package be.pxl.drivesoberapp.firstlaunch;
+package be.pxl.drivesoberapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
@@ -10,19 +11,38 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import be.pxl.drivesoberapp.MainActivity;
-import be.pxl.drivesoberapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-public class IntroSettingsActivity extends AppCompatActivity {
+import be.pxl.drivesoberapp.models.User;
+import be.pxl.drivesoberapp.utils.AuthenticationManager;
+import be.pxl.drivesoberapp.utils.DatabaseManager;
 
+public class IntroRegisterActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
+
+    private EditText etUsername;
+    private EditText etEmail;
+    private EditText etPassword;
     private NumberPicker npSetWeight;
     private ImageView ivFemale;
     private ImageView ivMale;
-    private Button btnSetPreferences;
+    private Button btnRegister;
+    private Animation btnAnim;
+    private ProgressBar progressBar;
 
     private String weightValue;
     private String genderValue;
@@ -36,16 +56,23 @@ public class IntroSettingsActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_intro_settings);
+        setContentView(R.layout.activity_intro_register);
 
         // Hide the action bar
         getSupportActionBar().hide();
 
+        // create mAuth instance
+        mAuth = FirebaseAuth.getInstance();
+
         // Initiate Views
+        etUsername = findViewById(R.id.et_username);
+        etEmail = findViewById(R.id.et_email);
+        etPassword = findViewById(R.id.et_password);
         npSetWeight = findViewById(R.id.np_set_weight);
         ivFemale = findViewById(R.id.iv_intro_settings_img_female);
         ivMale = findViewById(R.id.iv_intro_settings_img_male);
-        btnSetPreferences = findViewById(R.id.btn_intro_settings_set_preferences);
+        btnRegister = findViewById(R.id.btn_intro_register);
+        btnAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.button_animation);
 
         // Setup Numberpicker
         npSetWeight.setMinValue(25);
@@ -58,6 +85,10 @@ public class IntroSettingsActivity extends AppCompatActivity {
                 Log.d("setWeight Value:", weightValue);
             }
         });
+
+        // Setup genderpicker
+
+        genderValue = getString(R.string.pref_gender_default);
 
         ivFemale.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,26 +108,18 @@ public class IntroSettingsActivity extends AppCompatActivity {
             }
         });
 
-        // SetPrefences button clickListener
-        btnSetPreferences.setOnClickListener(new View.OnClickListener() {
+        // Register button clickListener
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open main activity
-                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivity);
-                savePreferences();
-                finish();
+
+                String email = etEmail.getText().toString();
+                String password = etPassword.getText().toString();
+                User newUser = new User(etUsername.getText().toString(), genderValue, npSetWeight.getValue());
+
+                AuthenticationManager.register(email, password, newUser, IntroRegisterActivity.this);
             }
         });
     }
-
-    public void savePreferences() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(getString(R.string.pref_weight_key), weightValue);
-        editor.putString(getString(R.string.pref_gender_key), genderValue);
-        editor.apply();
-    }
-
 
 }

@@ -1,4 +1,4 @@
-package be.pxl.drivesoberapp.firstlaunch;
+package be.pxl.drivesoberapp.utils;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import java.util.List;
 
 import be.pxl.drivesoberapp.R;
+import be.pxl.drivesoberapp.models.ScreenItem;
 
 public class IntroViewPagerAdapter extends PagerAdapter {
 

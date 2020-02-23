@@ -1,89 +1,70 @@
 package be.pxl.drivesoberapp;
 
-import android.content.Intent;
-import android.os.Bundle;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuCompat;
+import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-    private FirebaseFirestore db;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    private Fragment mMainFragment;
+    private static final String KEY_MAINFRAGMENT = "MAINFRAGMENT";
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+
+    public void onCreate(Bundle savedInstanceState) {
+        // LOG
+        logDebugInfo("Activity onCreate method is called.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
-        db = FirebaseFirestore.getInstance();
+        if (currentUser != null) {
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
-               // Create a new user with a first and last name
-                Map<String, Object> user = new HashMap<>();
-                user.put("first", "Ada");
-                user.put("last", "Lovelace");
-                user.put("born", 1815);
-
-// Add a new document with a generated ID
-                db.collection("users")
-                        .add(user)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d("TEST", "DocumentSnapshot added with ID: " + documentReference.getId());
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("TEST", "Error adding document", e);
-                            }
-                        });
+            if (savedInstanceState != null) {
+                //Restore the fragment's instance
+                mMainFragment = getSupportFragmentManager().getFragment(savedInstanceState, KEY_MAINFRAGMENT);
+            } else {
+                mMainFragment = MainFragment.newInstance();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, mMainFragment)
+                        .commitNow();
             }
-        });
-    }
-
-    // Menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            Intent settingsActivity = new Intent(this, SettingsActivity.class);
-            startActivity(settingsActivity);
-            return true;
+        } else {
+            Intent loginActivity = new Intent(this, LoginActivity.class);
+            startActivity(loginActivity);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // LOG
+        logDebugInfo("Activity onSaveInstanceState method is called.");
+
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's instance
+        //getSupportFragmentManager().putFragment(outState, KEY_MAINFRAGMENT, mMainFragment);
+    }
+
+
+
+
+
+    // debug Information
+    private void logDebugInfo(String message)
+    {
+        Log.d("MainActivity", message);
+    }
 }

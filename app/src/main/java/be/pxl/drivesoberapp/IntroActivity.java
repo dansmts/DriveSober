@@ -1,4 +1,4 @@
-package be.pxl.drivesoberapp.firstlaunch;
+package be.pxl.drivesoberapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,8 +19,8 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.pxl.drivesoberapp.MainActivity;
-import be.pxl.drivesoberapp.R;
+import be.pxl.drivesoberapp.utils.IntroViewPagerAdapter;
+import be.pxl.drivesoberapp.models.ScreenItem;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -44,7 +44,7 @@ public class IntroActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
-        // Check if its openened before or not
+        // Check if its opened before or not
         if (restoreIntroPrefData()) {
             // Load MainActivity
             Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class );
@@ -97,7 +97,7 @@ public class IntroActivity extends AppCompatActivity {
                     screenPager.setCurrentItem(position);
                 }
                 if (position == mList.size()-1) {
-                    loaddLastScreen();
+                    loadLastScreen();
                 }
             }
         });
@@ -107,7 +107,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == mList.size()-1) {
-                    loaddLastScreen();
+                    loadLastScreen();
                 }
             }
 
@@ -123,9 +123,11 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Open initial settings activity
-                Intent introSettingsActivity = new Intent(getApplicationContext(), IntroSettingsActivity.class);
-                startActivity(introSettingsActivity);
-                saveIntroPrefsData();
+               // Intent introSettingsActivity = new Intent(getApplicationContext(), IntroRegisterActivity.class);
+               // startActivity(introSettingsActivity);
+                Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(loginActivity);
+
                 finish();
             }
         });
@@ -145,15 +147,10 @@ public class IntroActivity extends AppCompatActivity {
         return  isIntroActivityOpnendBefore;
     }
 
-    private void saveIntroPrefsData() {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("introPref" ,MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("notInitialStart",true);
-        editor.apply();
-    }
+
 
     // Show the GetStarted Button and hide the indicator and the next button
-    private void loaddLastScreen() {
+    private void loadLastScreen() {
         btnNext.setVisibility(View.INVISIBLE);
         btnGetStarted.setVisibility(View.VISIBLE);
         tvSkip.setVisibility(View.INVISIBLE);

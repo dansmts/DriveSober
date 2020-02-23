@@ -2,6 +2,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory app:title="@string/pref_user_header">
+        <EditTextPreference
+            app:key="@string/pref_name_key"
+            app:title="@string/pref_name_title"
+            app:defaultValue="@string/pref_name_default"
+            app:useSimpleSummaryProvider="true"
+            android:inputType="text" />
 
         <EditTextPreference
             app:key="@string/pref_weight_key"
@@ -11,7 +17,7 @@
             android:inputType="numberDecimal" />
 
         <ListPreference
-            app:defaultValue="@string/pref_gender_default_value"
+            app:defaultValue="@string/pref_gender_default"
             app:entries="@array/pref_gender_entries"
             app:entryValues="@array/pref_gender_values"
             app:key="@string/pref_gender_key"

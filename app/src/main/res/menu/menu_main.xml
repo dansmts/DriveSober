@@ -2,9 +2,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="be.pxl.drivesoberapp.MainActivity">
+
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_greeting"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="@string/action_greeting"
+        app:showAsAction="never"
+        android:enabled="false" />
+
+    <group android:id="@+id/menu_current_nightout">
+        <item
+            android:id="@+id/action_new"
+            android:orderInCategory="100"
+            android:title="@string/action_new"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/action_reset"
+            android:orderInCategory="101"
+            android:title="@string/action_reset"
+            app:showAsAction="never" />
+    </group>
+
+    <group android:id="@+id/menu_history">
+        <item
+            android:id="@+id/action_history"
+            android:orderInCategory="200"
+            android:title="@string/action_history"
+            app:showAsAction="never" />
+    </group>
+
+    <group android:id="@+id/menu_settings">
+        <item
+            android:id="@+id/action_settings"
+            android:orderInCategory="300"
+            android:title="@string/action_settings"
+            app:showAsAction="never" />
+    </group>
+
+    <group android:id="@+id/menu_logout">
+        <item
+            android:id="@+id/action_logout"
+            android:orderInCategory="400"
+            android:title="@string/action_logout"
+            app:showAsAction="never" />
+    </group>
+
 </menu>

@@ -1,0 +1,52 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_drank_icoon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="drank icoon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_drank_soort"
+        app:srcCompat="@drawable/ic_drink_champagne"
+        />
+
+    <TextView
+        android:id="@+id/tv_drank_soort"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:paddingLeft="@dimen/list_item_spacing"
+        android:paddingTop="@dimen/list_item_spacing_half"
+        android:paddingRight="@dimen/list_item_spacing"
+        android:paddingBottom="@dimen/list_item_spacing_half"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_drank_icoon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="bierSoort" />
+
+    <TextView
+        android:id="@+id/tv_uur_consumptie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_drank_icoon"
+        app:layout_constraintTop_toBottomOf="@+id/tv_drank_soort"
+        tools:text="uur consumptie" />
+
+    <TextView
+        android:id="@+id/tv_standaard_glazen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_uur_consumptie"
+        app:layout_constraintTop_toBottomOf="@+id/tv_drank_soort"
+        tools:text="2 standaardglazen" />
+</androidx.constraintlayout.widget.ConstraintLayout>

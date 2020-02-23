@@ -4,15 +4,28 @@
     <string name="title_activity_main">Drive Sober</string>
 
     <!-- Menu items -->
+    <string name="action_greeting">Hello Username</string>
+    <string name="action_new">New</string>
+    <string name="action_reset">Reset</string>
     <string name="action_settings">Settings</string>
-    <string name="menu_geschiedenis">Geschiedenis</string>
+    <string name="action_history">History</string>
+    <string name="action_logout">Logout</string>
 
     <!-- Intro Activity -->
     <string name="intro_settings_weight_label">Set Weight</string>
     <string name="intro_settings_gender_label">Set Gender</string>
-    <string name="intro_settings_preferences_button">Set Preferences</string>
+    <string name="intro_register_button">Register</string>
     <string name="intro_settings_content_description_female">Set gender female image</string>
     <string name="intro_settings_content_description_male">Set gender male image</string>
+
+    <!-- Main Activity -->
+    <string name="nightout_sober">Sober</string>
+    <string name="nightout_add_consumption">Add consumption to start</string>
+    <string name="nightout_sober_at">Sober at</string>
+
+    <!-- History Activity -->
+    <string name="title_historynightoutitem_list">HistoryNightOutItems</string>
+    <string name="title_historynightoutitem_detail">HistoryNightOutItem Detail</string>
 
     <!-- Preferences -->
     <string name="pref_root_key">root_preferences</string>
@@ -21,6 +34,12 @@
     <string name="pref_user_header">User Preferences</string>
     <string name="pref_app_header">App Preferences</string>
 
+    <!-- Name Preference -->
+    <string name="pref_name_title">Username</string>
+    <string name="pref_name_key" translatable="false">username</string>
+    <string name="pref_name_default">John Doe</string>
+
+
     <!-- Geslacht Preference -->
     <string name="pref_gender_title">Gender</string>
     <string name="pref_gender_key" translatable="false">gender</string>
@@ -28,19 +47,38 @@
     <string name="pref_gender_male_value" translatable="false">male</string>
     <string name="pref_gender_female_label">Female</string>
     <string name="pref_gender_female_value" translatable="false">female</string>
-    <string name="pref_gender_default_value" translatable="false">female</string>
+    <string name="pref_gender_default" translatable="false">female</string>
 
     <!-- Weight Preference -->
     <string name="pref_weight_title">Weight</string>
     <string name="pref_weight_key" translatable="false">weight</string>
     <string name="pref_weight_default">75</string>
 
-
-    <!-- Drunk Fases icoon-->
+    <!-- NightOut Model -->
+    <!-- Drunk Fases icoon -->
     <string name="ic_drunk_fase_1">ic_drunk_fase_1</string>
     <string name="ic_drunk_fase_2">ic_drunk_fase_2</string>
     <string name="ic_drunk_fase_3">ic_drunk_fase_3</string>
     <string name="ic_drunk_fase_4">ic_drunk_fase_4</string>
     <string name="ic_drunk_fase_5">ic_drunk_fase_5</string>
     <string name="ic_drunk_fase_6">ic_drunk_fase_6</string>
+
+    <!-- Consumption units -->
+    <string name="consumption_unit">unit</string>
+    <string name="consumption_units">units</string>
+
+
+
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+
 </resources>
