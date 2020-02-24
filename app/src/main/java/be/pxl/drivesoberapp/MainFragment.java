@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -299,20 +300,27 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
     public void onSaveClicked() {
         Log.d("MainFragment", "onSaveClicked method is called.");
         // dbManager.saveNightOutToDatabase(mNightOut);
+        String output = getString(R.string.sms_part1) + mNightOut.calculateBloodAlcoholContent() + " ‰ " +
+                getString(R.string.sms_part2) + " " + mNightOut.returnTimeSober().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.setData(Uri.parse("smsto:"));
+        sendIntent.putExtra("sms_body", output);
+        startActivity(sendIntent);
 
-        if (mNotificationEnabled == false) {
-            mNotificationEnabled = true;
-            ivNotificationButton.setAlpha((float) 1.0);
-            scheduleNotification(getNotification("test"));
-            // show Toast
-            Toast.makeText(getContext(), "Notification enabled", Toast.LENGTH_SHORT).show();
-        } else {
-            mNotificationEnabled = false;
-            ivNotificationButton.setAlpha((float) 0.4);
-            NotificationManagerCompat.from(getContext()).cancel(1);
-            // show Toast
-            Toast.makeText(getContext(), "Notification disabled", Toast.LENGTH_SHORT).show();
-        }
+
+        //   if (mNotificationEnabled == false) {
+     //       mNotificationEnabled = true;
+     //       ivNotificationButton.setAlpha((float) 1.0);
+     //       scheduleNotification(getNotification("test"));
+     //       // show Toast
+    //        Toast.makeText(getContext(), "Notification enabled", Toast.LENGTH_SHORT).show();
+     //   } else {
+     //       mNotificationEnabled = false;
+     //       ivNotificationButton.setAlpha((float) 0.4);
+     //       NotificationManagerCompat.from(getContext()).cancel(1);
+     //       // show Toast
+     //       Toast.makeText(getContext(), "Notification disabled", Toast.LENGTH_SHORT).show();
+     //   }
 
 
     }

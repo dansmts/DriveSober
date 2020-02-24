@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RijdenZonderInvloed</string>
+    <string name="title_activity_settings">Instellingen</string>
+    <string name="title_activity_main">RijdenZonderInvloed</string>
+
+    <!-- Menu items -->
+    <string name="action_greeting">Hallo Username</string>
+    <string name="action_new">Nieuw</string>
+    <string name="action_save">Opslaan</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="action_history">Geschiedenis</string>
+    <string name="action_logout">Log uit</string>
+
+    <!-- Intro Activity -->
+    <string name="intro_settings_weight_label">Gewicht</string>
+    <string name="intro_settings_gender_label">Geslacht</string>
+    <string name="intro_register_button">Registreer</string>
+    <string name="intro_settings_content_description_female">Geslacht vrouw afbeelding</string>
+    <string name="intro_settings_content_description_male">Geslacht man afbeelding</string>
+
+    <!-- Main Activity -->
+    <string name="nightout_sober">Nuchter</string>
+    <string name="nightout_add_consumption">Voeg consumptie toe om te starten</string>
+    <string name="nightout_sober_at">Terug nuchter om</string>
+
+    <!-- History Activity -->
+    <string name="title_historynightoutitem_list">Geschiedenis</string>
+    <string name="title_historynightoutitem_detail">geschiedenis</string>
+
+    <!-- Preferences -->
+    <string name="pref_root_key">root_preferences</string>
+
+    <!-- Preference Titles -->
+    <string name="pref_user_header">Gebruiker voorkeuren</string>
+    <string name="pref_app_header">App voorkeuren</string>
+
+    <!-- Name Preference -->
+    <string name="pref_name_title">Gebruikersnaam</string>
+    <string name="pref_name_key" translatable="false">username</string>
+    <string name="pref_name_default">John Doe</string>
+
+
+    <!-- Geslacht Preference -->
+    <string name="pref_gender_title">Geslacht</string>
+    <string name="pref_gender_key" translatable="false">gender</string>
+    <string name="pref_gender_male_label">Man</string>
+    <string name="pref_gender_male_value" translatable="false">male</string>
+    <string name="pref_gender_female_label">Vrouw</string>
+    <string name="pref_gender_female_value" translatable="false">female</string>
+    <string name="pref_gender_default" translatable="false">female</string>
+
+    <!-- Weight Preference -->
+    <string name="pref_weight_title">Gewicht</string>
+    <string name="pref_weight_key" translatable="false">weight</string>
+    <string name="pref_weight_default">75</string>
+
+    <!-- NightOut Model -->
+    <!-- Drunk Fases icoon -->
+    <string name="ic_drunk_fase_1">ic_drunk_fase_1</string>
+    <string name="ic_drunk_fase_2">ic_drunk_fase_2</string>
+    <string name="ic_drunk_fase_3">ic_drunk_fase_3</string>
+    <string name="ic_drunk_fase_4">ic_drunk_fase_4</string>
+    <string name="ic_drunk_fase_5">ic_drunk_fase_5</string>
+    <string name="ic_drunk_fase_6">ic_drunk_fase_6</string>
+
+    <!-- Drinks List -->
+    <string name="con_beer_pint">Glas bier</string>
+    <string name="con_beer_can">Blik bier</string>
+    <string name="con_beer_special">Speciaal Bier</string>
+    <string name="con_wine_glass">Glas Wijn</string>
+    <string name="con_wine_bottle">Fles Wijn</string>
+    <string name="con_spirit_glass">Sterke Drank</string>
+    <string name="con_spirit_bottle">Fles Sterke Drank</string>
+    <string name="con_champagne">Glas Champagne</string>
+    <string name="con_mix_drink">Cocktail</string>
+
+    <!-- Consumption units -->
+    <string name="consumption_unit">standaardglas</string>
+    <string name="consumption_units">standaardglazen</string>
+
+    <!-- SMS -->
+    <string name="sms_part1">Kom mij ophalen aub. Mijn alcholpercentage is </string>
+    <string name="sms_part2"> and ik mag pas terug rijden om </string>
+
+
+
+    <string name="title_activity_login">Log in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Paswoord</string>
+    <string name="action_sign_in">Log in</string>
+    <string name="action_register">Registreer</string>
+    <string name="action_sign_in_short">Log in</string>
+    <string name="invalid_username">Geen geldige gebruikersnaam</string>
+    <string name="invalid_password">Paswoord moet minstens 5 tekens bevatten</string>
+    <string name="login_failed">Log in mislukt</string>
+
+
+</resources>
