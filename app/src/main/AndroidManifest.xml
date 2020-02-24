@@ -14,6 +14,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".HistoryListActivity"
@@ -34,8 +35,12 @@
                 android:value="be.pxl.drivesoberapp.HistoryListActivity" />
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".IntroRegisterActivity" />
-        <activity android:name=".IntroActivity">
+        <activity
+            android:name=".IntroRegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".IntroActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,6 +52,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <receiver
+            android:name=".utils.MyReceiver"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
     </application>
 
 </manifest>

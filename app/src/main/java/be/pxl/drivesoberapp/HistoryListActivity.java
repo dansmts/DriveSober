@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -38,6 +39,9 @@ import java.util.List;
 
 public class HistoryListActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+
     private DatabaseManager dbManager;
     private ArrayList<NightOut> nightOutArrayList;
     private boolean mTwoPane;
@@ -52,10 +56,14 @@ public class HistoryListActivity extends AppCompatActivity {
         toolbar.setTitle(getTitle());
 
         nightOutArrayList = new ArrayList<>();
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
@@ -71,9 +79,8 @@ public class HistoryListActivity extends AppCompatActivity {
         rvConsumptieLijst.setAdapter(geschiedenisListRecyclerViewAdapter);
 
 
-        dbManager = new DatabaseManager();
         Task<QuerySnapshot> task =
-                FirebaseFirestore.getInstance().collection("nightsOutDan").get();
+                FirebaseFirestore.getInstance().collection(mUser.getUid()).get();
 
         task.addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                       @Override
@@ -81,7 +88,7 @@ public class HistoryListActivity extends AppCompatActivity {
 
                                           List<DocumentSnapshot> documentSnapshots = queryDocumentSnapshots.getDocuments();
                                           for (DocumentSnapshot d : documentSnapshots) {
-                                              nightOutArrayList.add(dbManager.createNewNightOut(d));
+                                              nightOutArrayList.add(DatabaseManager.createNewNightOut(d));
                                               geschiedenisListRecyclerViewAdapter.notifyDataSetChanged();
                                           }
 

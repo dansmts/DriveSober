@@ -5,11 +5,11 @@ public class User {
 
     private String displayName;
     private String gender;
-    private int weight;
+    private String weight;
 
     public User () {}
 
-    public User(String displayName, String gender, int weight) {
+    public User(String displayName, String gender, String weight) {
         this.displayName = displayName;
         this.gender = gender;
         this.weight = weight;
@@ -21,5 +21,5 @@ public class User {
 
     public String getGender() { return gender; }
 
-    public int getWeight() { return weight; }
+    public String getWeight() { return weight; }
 }

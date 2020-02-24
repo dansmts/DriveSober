@@ -69,16 +69,17 @@ public class DatabaseManager {
     }
 
     // save to FireStore
-    public void saveNightOutToDatabase(NightOut nightOut) {
+    public static void saveNightOutToDatabase(String userUID, NightOut nightOut) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         if (nightOut.getId() == null) {
-            DocumentReference newNightOutRef = db.collection("nightsOutDan").document();
+            DocumentReference newNightOutRef = db.collection(userUID).document();
             nightOut.setId(newNightOutRef.getId());
         }
 
         Map<String, Object> nightOutMap = createNightOutMap(nightOut);
 
-        DocumentReference nightOutRef = db.collection("nightsOutDan").document(nightOut.getId());
+        DocumentReference nightOutRef = db.collection(userUID).document(nightOut.getId());
         nightOutRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
 
@@ -121,7 +122,7 @@ public class DatabaseManager {
         });
     }
 
-    private Map<String, Object> createNightOutMap(NightOut nightOut) {
+    private static Map<String, Object> createNightOutMap(NightOut nightOut) {
 
         Map<String, Object> nightOutMap = new HashMap<>();
         nightOutMap.put("date", nightOut.getDate().toString());
@@ -148,13 +149,11 @@ public class DatabaseManager {
     }
 
     // read from FireStore
-    public ArrayList<NightOut> getNightOutsFromDatabase() {
-
-        CollectionReference nightsOutRef = db.collection("nightsOutDan");
+    public ArrayList<NightOut> getNightOutsFromDatabase(String userUID) {
 
         ArrayList<NightOut> nightOutArrayList = new ArrayList<>();
 
-        db.collection("nightsOutDan")
+        db.collection(userUID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -172,7 +171,28 @@ public class DatabaseManager {
         return nightOutArrayList;
     }
 
-    public NightOut createNewNightOut(DocumentSnapshot document) {
+    public static NightOut readNightOut(String userUID, String nightOutID) {
+        final NightOut[] returnNightOut = new NightOut[1];
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection(userUID).document(nightOutID);
+        docRef.get()
+            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    returnNightOut[0] = createNewNightOut(doc);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+        return returnNightOut[0];
+    }
+
+    public static NightOut createNewNightOut(DocumentSnapshot document) {
         NightOut nightOut = new NightOut();
 
         nightOut.setId((String) document.getId());

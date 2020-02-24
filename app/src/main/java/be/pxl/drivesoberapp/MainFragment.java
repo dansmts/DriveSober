@@ -1,5 +1,8 @@
 package be.pxl.drivesoberapp;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +10,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.MenuCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
@@ -25,19 +30,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,8 +50,7 @@ import be.pxl.drivesoberapp.models.Consumption;
 import be.pxl.drivesoberapp.models.NightOut;
 import be.pxl.drivesoberapp.utils.ConsumptionListAdapter;
 import be.pxl.drivesoberapp.utils.DrinksListDialogFragment;
-
-import static android.content.ContentValues.TAG;
+import be.pxl.drivesoberapp.utils.MyReceiver;
 
 public class MainFragment extends Fragment implements DrinksListDialogFragment.Listener,
         SharedPreferences.OnSharedPreferenceChangeListener {
@@ -68,7 +69,7 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
     private TextView tvAantalGlazen;
     private TextView tvNuchterValue;
     private TextView tvNuchterLabel;
-    private ImageView ivSaveButton;
+    private ImageView ivNotificationButton;
 
     // Adapters
     private ConsumptionListAdapter mConsumptionAdapter;
@@ -81,12 +82,15 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
     private DrinkController dc;
     private Menu mOptionsMenu;
     private static final String KEY_NIGHTOUT = "NIGHTOUT";
+    private static final String KEY_NIGHTOUT_JSON = "NIGHTOUT_JSON";
+    private boolean mNotificationEnabled;
+
+    private Gson gson;
     ////////////////////////////////////////////////////////////////////
 
     public static MainFragment newInstance() {
         return new MainFragment();
     }
-
 
     @Nullable
     @Override
@@ -112,6 +116,9 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
         // create DrinkController
         dc = new DrinkController();
 
+        // load Gson
+        gson = new Gson();
+
         // load NightOut layout TextViews
         tvDatum = view.findViewById(R.id.tv_datum_value);
         tvEersteConsumptie = view.findViewById(R.id.tv_eerste_consumptie_value);
@@ -121,18 +128,24 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
         tvNuchterLabel = view.findViewById(R.id.tv_nuchter_label);
 
         // load Save Button
-        ivSaveButton = view.findViewById(R.id.iv_save);
-        ivSaveButton.setOnClickListener(save -> onSaveClicked());
+        ivNotificationButton = view.findViewById(R.id.iv_save);
+        ivNotificationButton.setOnClickListener(save -> onSaveClicked());
 
         // load SavedInstanceState
         if (savedInstanceState != null) {
             mNightOut = savedInstanceState.getParcelable(KEY_NIGHTOUT);
             updateTextViews();
         } else {
-            mNightOut = new NightOut(getContext());
-            tvNuchterValue.setText(getText(R.string.nightout_sober));
-            tvNuchterLabel.setText(getText(R.string.nightout_add_consumption));
-            ivSaveButton.setVisibility(View.GONE);
+          //  String nightOutJson = sharedPreferences.getString(KEY_NIGHTOUT_JSON, null);
+          //  if (nightOutJson != null ) {
+          //      mNightOut = gson.fromJson(nightOutJson, NightOut.class);
+          //      updateTextViews();
+          //  } else {
+                mNightOut = new NightOut(getContext());
+                tvNuchterValue.setText(getText(R.string.nightout_sober));
+                tvNuchterLabel.setText(getText(R.string.nightout_add_consumption));
+                ivNotificationButton.setVisibility(View.GONE);
+
         }
 
         // load RecyclerView
@@ -190,7 +203,11 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
             tvPromille.setText("");
             tvAantalGlazen.setText("");
 
-            ivSaveButton.setVisibility(View.GONE);
+            ivNotificationButton.setVisibility(View.GONE);
+
+            mNotificationEnabled = false;
+            ivNotificationButton.setAlpha((float) 0.4);
+            NotificationManagerCompat.from(getContext()).cancel(1);
 
         } else {
             tvNuchterLabel.setText(getText(R.string.nightout_sober_at));
@@ -203,23 +220,23 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
             sTotalUnits += mNightOut.getTotalUnits() > 1 ? getText(R.string.consumption_units) : getText(R.string.consumption_unit);
             tvAantalGlazen.setText(sTotalUnits);
 
-            ivSaveButton.setVisibility(View.VISIBLE);
+            ivNotificationButton.setVisibility(View.VISIBLE);
+
+            if (mNotificationEnabled == true) scheduleNotification(getNotification("test"));
         }
     }
 
     // instanceState
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle savedInstanceState) {
         // LOG
         logDebugInfo("Fragment onSaveInstanceState is called.");
 
         // save State
-        super.onSaveInstanceState(outState);
         if (mNightOut.getAantalConsumpties() != 0) {
-            outState.putParcelable(KEY_NIGHTOUT, mNightOut);
-            if (mSavedState == null) mSavedState = new Bundle();
-            mSavedState.putParcelable(KEY_NIGHTOUT, mNightOut);
+            savedInstanceState.putParcelable(KEY_NIGHTOUT, mNightOut);
         }
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     // sharedPreferences
@@ -228,7 +245,7 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
         logDebugInfo("setupSharedPreferences is called.");
 
         // load SharedPreferences
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -281,9 +298,61 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
     // iv_save Method onSaveClicked
     public void onSaveClicked() {
         Log.d("MainFragment", "onSaveClicked method is called.");
-       dbManager.saveNightOutToDatabase(mNightOut);
+        // dbManager.saveNightOutToDatabase(mNightOut);
+
+        if (mNotificationEnabled == false) {
+            mNotificationEnabled = true;
+            ivNotificationButton.setAlpha((float) 1.0);
+            scheduleNotification(getNotification("test"));
+            // show Toast
+            Toast.makeText(getContext(), "Notification enabled", Toast.LENGTH_SHORT).show();
+        } else {
+            mNotificationEnabled = false;
+            ivNotificationButton.setAlpha((float) 0.4);
+            NotificationManagerCompat.from(getContext()).cancel(1);
+            // show Toast
+            Toast.makeText(getContext(), "Notification disabled", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
+
+    public static final String NOTIFICATION_CHANNEL_ID = "10001" ;
+    private final static String default_notification_channel_id = "default";
+
+    private void scheduleNotification (Notification notification) {
+        Intent notificationIntent = new Intent( getContext(), MyReceiver. class );
+        notificationIntent.putExtra(MyReceiver.NOTIFICATION_ID , 1 );
+        notificationIntent.putExtra(MyReceiver.NOTIFICATION , notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast ( getContext(), 0 , notificationIntent , PendingIntent.FLAG_UPDATE_CURRENT ) ;
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE ) ;
+
+        Calendar alarmForNotification = Calendar.getInstance();
+        alarmForNotification.set(Calendar.HOUR_OF_DAY, mNightOut.returnTimeSober().getHour());
+        alarmForNotification.set(Calendar.MINUTE, mNightOut.returnTimeSober().getMinute());
+        alarmForNotification.set(Calendar.SECOND, mNightOut.returnTimeSober().getSecond());
+
+        assert alarmManager != null;
+        alarmManager.set(AlarmManager.RTC_WAKEUP , alarmForNotification.getTimeInMillis() , pendingIntent) ;
+
+    }
+    private Notification getNotification (String content) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder( getContext(), default_notification_channel_id );
+        builder.setContentTitle( "Scheduled Notification" );
+        builder.setContentText(content);
+        builder.setSmallIcon(R.drawable. ic_launcher_foreground );
+        builder.setAutoCancel( true );
+        builder.setChannelId( NOTIFICATION_CHANNEL_ID );
+        return builder.build() ;
+    }
+
+
+
+
+
+
+
+
 
 
 
@@ -332,16 +401,23 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
 
         if (id == R.id.action_settings) {
             Intent settingsActivity = new Intent(getContext(), PreferencesActivity.class);
+            settingsActivity.putExtra(KEY_NIGHTOUT, mNightOut);
             startActivity(settingsActivity);
             return true;
         } else if (id == R.id.action_history) {
             Intent historyActivity = new Intent(getContext(), HistoryListActivity.class);
             startActivity(historyActivity);
             return true;
+        } else if (id == R.id.action_new) {
+            mNightOut = new NightOut(getContext());
+            updateTextViews();
+        } else if (id == R.id.action_save) {
+            DatabaseManager.saveNightOutToDatabase(mUser.getUid(), mNightOut);
         } else if (id == R.id.action_logout) {
 
             mAuth.signOut();
             AuthenticationManager.saveIntroPrefsData(getActivity());
+            //sharedPreferences.edit().remove(KEY_NIGHTOUT_JSON).commit();
             Intent introActivity = new Intent(getContext(), IntroActivity.class);
             startActivity(introActivity);
             return true;
@@ -371,10 +447,21 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
     }
 
     @Override
+    public void onStart() {
+        // LOG
+        logDebugInfo("Fragment onStart method is called.");
+
+
+        super.onStart();
+    }
+
+    @Override
     public void onPause() {
         // LOG
         logDebugInfo("Fragment onPause method is called.");
-
+       // String nightOutJson = gson.toJson(mNightOut);
+       // DatabaseManager.saveNightOutToDatabase(mUser.getUid(), mNightOut);
+       // sharedPreferences.edit().putString(KEY_NIGHTOUT_JSON, nightOutJson).commit();
         super.onPause();
     }
 

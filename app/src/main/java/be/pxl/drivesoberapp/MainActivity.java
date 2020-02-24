@@ -53,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
         logDebugInfo("Activity onSaveInstanceState method is called.");
 
         super.onSaveInstanceState(outState);
-
-        //Save the fragment's instance
-        //getSupportFragmentManager().putFragment(outState, KEY_MAINFRAGMENT, mMainFragment);
     }
 
 

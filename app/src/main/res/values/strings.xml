@@ -6,7 +6,7 @@
     <!-- Menu items -->
     <string name="action_greeting">Hello Username</string>
     <string name="action_new">New</string>
-    <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
     <string name="action_settings">Settings</string>
     <string name="action_history">History</string>
     <string name="action_logout">Logout</string>

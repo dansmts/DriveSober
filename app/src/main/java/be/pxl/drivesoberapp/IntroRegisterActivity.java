@@ -115,7 +115,7 @@ public class IntroRegisterActivity extends AppCompatActivity {
 
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
-                User newUser = new User(etUsername.getText().toString(), genderValue, npSetWeight.getValue());
+                User newUser = new User(etUsername.getText().toString(), genderValue, weightValue);
 
                 AuthenticationManager.register(email, password, newUser, IntroRegisterActivity.this);
             }
