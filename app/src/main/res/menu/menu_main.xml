@@ -22,6 +22,12 @@
             android:orderInCategory="101"
             android:title="@string/action_save"
             app:showAsAction="never" />
+
+        <item
+            android:id="@+id/action_sms"
+            android:orderInCategory="102"
+            android:title="@string/action_sms"
+            app:showAsAction="never" />
     </group>
 
     <group android:id="@+id/menu_history">

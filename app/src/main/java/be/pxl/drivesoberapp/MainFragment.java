@@ -56,20 +56,18 @@ import be.pxl.drivesoberapp.utils.MyReceiver;
 public class MainFragment extends Fragment implements DrinksListDialogFragment.Listener,
         SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private Bundle mSavedState;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
-    ///////////////////////////////////////////////
     // Layout
     private RecyclerView rvConsumptieLijst;
     private RecyclerView.LayoutManager layoutManager;
-    private TextView tvDatum;
-    private TextView tvEersteConsumptie;
-    private TextView tvPromille;
-    private TextView tvAantalGlazen;
-    private TextView tvNuchterValue;
-    private TextView tvNuchterLabel;
+    private TextView tvDate;
+    private TextView tvFirstDrink;
+    private TextView tvBAC;
+    private TextView tvUnits;
+    private TextView tvSoberValue;
+    private TextView tvSoberLabel;
     private ImageView ivNotificationButton;
 
     // Adapters
@@ -86,8 +84,6 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
     private static final String KEY_NIGHTOUT_JSON = "NIGHTOUT_JSON";
     private boolean mNotificationEnabled;
 
-    private Gson gson;
-    ////////////////////////////////////////////////////////////////////
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -117,16 +113,13 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
         // create DrinkController
         dc = new DrinkController();
 
-        // load Gson
-        gson = new Gson();
-
         // load NightOut layout TextViews
-        tvDatum = view.findViewById(R.id.tv_datum_value);
-        tvEersteConsumptie = view.findViewById(R.id.tv_eerste_consumptie_value);
-        tvPromille = view.findViewById(R.id.tv_promille_value);
-        tvAantalGlazen = view.findViewById(R.id.tv_standaardglazen_value);
-        tvNuchterValue = view.findViewById(R.id.tv_nuchter_value);
-        tvNuchterLabel = view.findViewById(R.id.tv_nuchter_label);
+        tvDate = view.findViewById(R.id.tv_date_value);
+        tvFirstDrink = view.findViewById(R.id.tv_firstdrink_value);
+        tvBAC = view.findViewById(R.id.tv_bac_value);
+        tvUnits = view.findViewById(R.id.tv_units_value);
+        tvSoberValue = view.findViewById(R.id.tv_sober_value);
+        tvSoberLabel = view.findViewById(R.id.tv_sober_label);
 
         // load Save Button
         ivNotificationButton = view.findViewById(R.id.iv_save);
@@ -143,8 +136,8 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
           //      updateTextViews();
           //  } else {
                 mNightOut = new NightOut(getContext());
-                tvNuchterValue.setText(getText(R.string.nightout_sober));
-                tvNuchterLabel.setText(getText(R.string.nightout_add_consumption));
+                tvSoberValue.setText(getText(R.string.nightout_sober));
+                tvSoberLabel.setText(getText(R.string.nightout_add_consumption));
                 ivNotificationButton.setVisibility(View.GONE);
 
         }
@@ -197,12 +190,12 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
             rvConsumptieLijst.setAdapter(mConsumptionAdapter);
 
             // reset TextViews
-            tvNuchterValue.setText(getText(R.string.nightout_sober));
-            tvNuchterLabel.setText(getText(R.string.nightout_add_consumption));
-            tvDatum.setText(mNightOut.getDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)));
-            tvEersteConsumptie.setText("");
-            tvPromille.setText("");
-            tvAantalGlazen.setText("");
+            tvSoberValue.setText(getText(R.string.nightout_sober));
+            tvSoberLabel.setText(getText(R.string.nightout_add_consumption));
+            tvDate.setText(mNightOut.getDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)));
+            tvFirstDrink.setText("");
+            tvBAC.setText("");
+            tvUnits.setText("");
 
             ivNotificationButton.setVisibility(View.GONE);
 
@@ -211,15 +204,12 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
             NotificationManagerCompat.from(getContext()).cancel(1);
 
         } else {
-            tvNuchterLabel.setText(getText(R.string.nightout_sober_at));
-            tvNuchterValue.setText(mNightOut.returnTimeSober().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)));
-            tvDatum.setText(mNightOut.getDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)));
-            tvEersteConsumptie.setText(mNightOut.getTimeFirstDrink().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)));
-            tvPromille.setText(mNightOut.calculateBloodAlcoholContent() + " ‰");
-
-            String sTotalUnits = Double.toString(mNightOut.getTotalUnits()) + " ";
-            sTotalUnits += mNightOut.getTotalUnits() > 1 ? getText(R.string.consumption_units) : getText(R.string.consumption_unit);
-            tvAantalGlazen.setText(sTotalUnits);
+            tvSoberLabel.setText(getText(R.string.nightout_sober_at));
+            tvSoberValue.setText(mNightOut.returnTimeSober().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)));
+            tvDate.setText(mNightOut.getDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)));
+            tvFirstDrink.setText(mNightOut.getTimeFirstDrink().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)));
+            tvBAC.setText(mNightOut.calculateBloodAlcoholContent() + " ‰");
+            tvUnits.setText(Double.toString(mNightOut.getTotalUnits()));
 
             ivNotificationButton.setVisibility(View.VISIBLE);
 
@@ -299,28 +289,20 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
     // iv_save Method onSaveClicked
     public void onSaveClicked() {
         Log.d("MainFragment", "onSaveClicked method is called.");
-        // dbManager.saveNightOutToDatabase(mNightOut);
-        String output = getString(R.string.sms_part1) + mNightOut.calculateBloodAlcoholContent() + " ‰ " +
-                getString(R.string.sms_part2) + " " + mNightOut.returnTimeSober().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
-        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        sendIntent.setData(Uri.parse("smsto:"));
-        sendIntent.putExtra("sms_body", output);
-        startActivity(sendIntent);
 
-
-        //   if (mNotificationEnabled == false) {
-     //       mNotificationEnabled = true;
-     //       ivNotificationButton.setAlpha((float) 1.0);
-     //       scheduleNotification(getNotification("test"));
-     //       // show Toast
-    //        Toast.makeText(getContext(), "Notification enabled", Toast.LENGTH_SHORT).show();
-     //   } else {
-     //       mNotificationEnabled = false;
-     //       ivNotificationButton.setAlpha((float) 0.4);
-     //       NotificationManagerCompat.from(getContext()).cancel(1);
-     //       // show Toast
-     //       Toast.makeText(getContext(), "Notification disabled", Toast.LENGTH_SHORT).show();
-     //   }
+        if (mNotificationEnabled == false) {
+            mNotificationEnabled = true;
+            ivNotificationButton.setAlpha((float) 1.0);
+            scheduleNotification(getNotification(getString(R.string.noti_body)));
+            // show Toast
+            Toast.makeText(getContext(), "Notification enabled", Toast.LENGTH_SHORT).show();
+        } else {
+            mNotificationEnabled = false;
+            ivNotificationButton.setAlpha((float) 0.4);
+            NotificationManagerCompat.from(getContext()).cancel(1);
+            // show Toast
+            Toast.makeText(getContext(), "Notification disabled", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
@@ -346,7 +328,7 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
     }
     private Notification getNotification (String content) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder( getContext(), default_notification_channel_id );
-        builder.setContentTitle( "Scheduled Notification" );
+        builder.setContentTitle(getString(R.string.noti_title));
         builder.setContentText(content);
         builder.setSmallIcon(R.drawable. ic_launcher_foreground );
         builder.setAutoCancel( true );
@@ -420,6 +402,13 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
             updateTextViews();
         } else if (id == R.id.action_save) {
             DatabaseManager.saveNightOutToDatabase(mUser.getUid(), mNightOut);
+        } else if (id == R.id.action_sms) {
+            String output = getString(R.string.sms_part1) + mNightOut.calculateBloodAlcoholContent() + " ‰ " +
+                    getString(R.string.sms_part2) + " " + mNightOut.returnTimeSober().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
+            Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+            sendIntent.setData(Uri.parse("smsto:"));
+            sendIntent.putExtra("sms_body", output);
+            startActivity(sendIntent);
         } else if (id == R.id.action_logout) {
 
             mAuth.signOut();

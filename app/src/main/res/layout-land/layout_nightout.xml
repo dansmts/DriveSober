@@ -9,105 +9,105 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/tv_datum_label"
+        android:id="@+id/tv_date_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DATUM"
+        android:text="@string/nightout_label_date"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_datum_value"
-        app:layout_constraintEnd_toEndOf="@+id/tv_datum_value"
-        app:layout_constraintStart_toStartOf="@+id/tv_datum_value" />
+        app:layout_constraintBottom_toTopOf="@+id/tv_date_value"
+        app:layout_constraintEnd_toEndOf="@+id/tv_date_value"
+        app:layout_constraintStart_toStartOf="@+id/tv_date_value" />
 
     <TextView
-        android:id="@+id/tv_datum_value"
+        android:id="@+id/tv_date_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_nuchter_label"
-        app:layout_constraintEnd_toEndOf="@+id/tv_nuchter_value"
-        app:layout_constraintStart_toStartOf="@+id/tv_nuchter_value"
+        app:layout_constraintBottom_toTopOf="@+id/tv_sober_label"
+        app:layout_constraintEnd_toEndOf="@+id/tv_sober_value"
+        app:layout_constraintStart_toStartOf="@+id/tv_sober_value"
         tools:text="Zondag, 26 januari 2020" />
 
     <TextView
-        android:id="@+id/tv_eerste_consumptie_label"
+        android:id="@+id/tv_firstdrink_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="showTimePickerDialog"
-        android:text="EERSTE CONSUMPTIE"
+        android:text="@string/nightout_label_firstdrink"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_eerste_consumptie_value"
-        app:layout_constraintStart_toStartOf="@+id/tv_eerste_consumptie_value"
-        app:layout_constraintTop_toBottomOf="@+id/tv_eerste_consumptie_value" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_firstdrink_value"
+        app:layout_constraintStart_toStartOf="@+id/tv_firstdrink_value"
+        app:layout_constraintTop_toBottomOf="@+id/tv_firstdrink_value" />
 
     <TextView
-        android:id="@+id/tv_eerste_consumptie_value"
+        android:id="@+id/tv_firstdrink_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_nuchter_value"
-        app:layout_constraintStart_toStartOf="@+id/tv_nuchter_value"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nuchter_value"
+        app:layout_constraintEnd_toEndOf="@+id/tv_sober_value"
+        app:layout_constraintStart_toStartOf="@+id/tv_sober_value"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sober_value"
         tools:text="21u58" />
 
     <TextView
-        android:id="@+id/tv_standaardglazen_label"
+        android:id="@+id/tv_units_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="STANDAARDGLAZEN"
+        android:text="@string/nightout_label_units"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_standaardglazen_value"
-        app:layout_constraintStart_toStartOf="@+id/tv_standaardglazen_value"
-        app:layout_constraintTop_toBottomOf="@+id/tv_standaardglazen_value" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_units_value"
+        app:layout_constraintStart_toStartOf="@+id/tv_units_value"
+        app:layout_constraintTop_toBottomOf="@+id/tv_units_value" />
 
     <TextView
-        android:id="@+id/tv_standaardglazen_value"
+        android:id="@+id/tv_units_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_promille_label"
-        app:layout_constraintStart_toStartOf="@+id/tv_promille_label"
-        app:layout_constraintTop_toBottomOf="@+id/tv_promille_label"
+        app:layout_constraintEnd_toEndOf="@+id/tv_bac_label"
+        app:layout_constraintStart_toStartOf="@+id/tv_bac_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bac_label"
         tools:text="2.9" />
 
     <TextView
-        android:id="@+id/tv_promille_label"
+        android:id="@+id/tv_bac_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="PROMILLE"
+        android:text="@string/nightout_label_bac"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_promille_value"
-        app:layout_constraintStart_toStartOf="@+id/tv_promille_value"
-        app:layout_constraintTop_toBottomOf="@+id/tv_promille_value" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_bac_value"
+        app:layout_constraintStart_toStartOf="@+id/tv_bac_value"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bac_value" />
 
     <TextView
-        android:id="@+id/tv_promille_value"
+        android:id="@+id/tv_bac_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:gravity="center"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_eerste_consumptie_label"
-        app:layout_constraintStart_toStartOf="@+id/tv_eerste_consumptie_label"
-        app:layout_constraintTop_toBottomOf="@+id/tv_eerste_consumptie_label"
+        app:layout_constraintEnd_toEndOf="@+id/tv_firstdrink_label"
+        app:layout_constraintStart_toStartOf="@+id/tv_firstdrink_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_firstdrink_label"
         tools:text="0,756 ‰" />
 
     <TextView
-        android:id="@+id/tv_nuchter_label"
+        android:id="@+id/tv_sober_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:text="TERUG NUCHTER OM"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_nuchter_value"
-        app:layout_constraintStart_toStartOf="@+id/tv_nuchter_value"
+        app:layout_constraintEnd_toEndOf="@+id/tv_sober_value"
+        app:layout_constraintStart_toStartOf="@+id/tv_sober_value"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_nuchter_value"
+        android:id="@+id/tv_sober_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
@@ -116,7 +116,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nuchter_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sober_label"
         tools:text="09u42" />
 
     <ImageView

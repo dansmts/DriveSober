@@ -64,10 +64,10 @@ public class HistoryDetailFragment extends Fragment {
         if (mNightOut != null) {
 
             try {
-                ((TextView) rootView.findViewById(R.id.tv_promille_value)).setText(String.valueOf(mNightOut.getMaxBAC()));
-                ((TextView) rootView.findViewById(R.id.tv_standaardglazen_value)).setText(Double.toString(mNightOut.getTotalUnits()));
-                ((TextView) rootView.findViewById(R.id.tv_datum_value)).setText(mNightOut.getDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
-                ((TextView) rootView.findViewById(R.id.tv_eerste_consumptie_value)).setText(mNightOut.getTimeFirstDrink().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)));
+                ((TextView) rootView.findViewById(R.id.tv_bac_value)).setText(String.valueOf(mNightOut.getMaxBAC()));
+                ((TextView) rootView.findViewById(R.id.tv_units_value)).setText(Double.toString(mNightOut.getTotalUnits()));
+                ((TextView) rootView.findViewById(R.id.tv_date_value)).setText(mNightOut.getDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
+                ((TextView) rootView.findViewById(R.id.tv_firstdrink_value)).setText(mNightOut.getTimeFirstDrink().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)));
                 ((ImageView) rootView.findViewById(R.id.iv_drunk_fase)).setImageResource(R.drawable.class.getField(getDrunkFaseIcoon()).getInt(null));
             } catch (IllegalAccessException | NoSuchFieldException e) {
                 e.printStackTrace();

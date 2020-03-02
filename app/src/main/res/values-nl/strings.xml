@@ -8,6 +8,7 @@
     <string name="action_greeting">Hallo Username</string>
     <string name="action_new">Nieuw</string>
     <string name="action_save">Opslaan</string>
+    <string name="action_sms">Zend SMS</string>
     <string name="action_settings">Instellingen</string>
     <string name="action_history">Geschiedenis</string>
     <string name="action_logout">Log uit</string>
@@ -23,6 +24,11 @@
     <string name="nightout_sober">Nuchter</string>
     <string name="nightout_add_consumption">Voeg consumptie toe om te starten</string>
     <string name="nightout_sober_at">Terug nuchter om</string>
+
+    <string name="nightout_label_date">DATUM</string>
+    <string name="nightout_label_firstdrink">EERSTE CONSUMPTIE</string>
+    <string name="nightout_label_bac">PROMILLE</string>
+    <string name="nightout_label_units">STANDAARDGLAZEN</string>
 
     <!-- History Activity -->
     <string name="title_historynightoutitem_list">Geschiedenis</string>
@@ -82,6 +88,10 @@
     <!-- SMS -->
     <string name="sms_part1">Kom mij ophalen aub. Mijn alcholpercentage is </string>
     <string name="sms_part2"> and ik mag pas terug rijden om </string>
+
+    <!-- Notification -->
+    <string name="noti_body">Genoeg gewacht. Al de alochol is uit het bloed.</string>
+    <string name="noti_title">Rijden Zonder Invloed</string>
 
 
 
