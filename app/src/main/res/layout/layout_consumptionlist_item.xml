@@ -37,6 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/iv_drank_icoon"
         app:layout_constraintTop_toBottomOf="@+id/tv_drank_soort"
         tools:text="uur consumptie" />
@@ -46,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/tv_uur_consumptie"
         app:layout_constraintTop_toBottomOf="@+id/tv_drank_soort"
         tools:text="2 standaardglazen" />

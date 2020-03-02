@@ -409,7 +409,6 @@ public class MainFragment extends Fragment implements DrinksListDialogFragment.L
 
         if (id == R.id.action_settings) {
             Intent settingsActivity = new Intent(getContext(), PreferencesActivity.class);
-            settingsActivity.putExtra(KEY_NIGHTOUT, mNightOut);
             startActivity(settingsActivity);
             return true;
         } else if (id == R.id.action_history) {

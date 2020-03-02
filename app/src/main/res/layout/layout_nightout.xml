@@ -15,7 +15,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="DATUM"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +23,7 @@
         android:id="@+id/tv_datum_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tv_datum_label"
@@ -32,12 +32,12 @@
 
     <TextView
         android:id="@+id/tv_eerste_consumptie_label"
-        android:onClick="showTimePickerDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:onClick="showTimePickerDialog"
         android:text="EERSTE CONSUMPTIE"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_promille_label" />
 
@@ -45,7 +45,7 @@
         android:id="@+id/tv_eerste_consumptie_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_eerste_consumptie_label"
         app:layout_constraintStart_toStartOf="@+id/tv_eerste_consumptie_label"
         tools:text="21u58" />
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="STANDAARDGLAZEN"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_promille_label" />
 
@@ -64,7 +64,7 @@
         android:id="@+id/tv_standaardglazen_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_standaardglazen_label"
         app:layout_constraintEnd_toEndOf="@+id/tv_standaardglazen_label"
         tools:text="2.9" />
@@ -76,7 +76,7 @@
         android:layout_marginTop="48dp"
         android:gravity="center"
         android:text="PROMILLE"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_promille_label"
         app:layout_constraintEnd_toEndOf="@+id/tv_promille_label"
         app:layout_constraintStart_toStartOf="@+id/tv_promille_label"
@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:text="TERUG NUCHTER OM"
-        android:textSize="10sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/tv_nuchter_value"
         app:layout_constraintStart_toStartOf="@+id/tv_nuchter_value"
         app:layout_constraintTop_toTopOf="parent" />
@@ -109,7 +109,7 @@
         android:id="@+id/tv_nuchter_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="42sp"
+        android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_nuchter_label"
